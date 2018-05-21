@@ -6,12 +6,49 @@
 
     <groupId>pub.iseekframework</groupId>
     <artifactId>iseekframework-utils</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${project.release.version}</version>
+    <packaging>jar</packaging>
+
+    <!-- 上传到快照仓库还是发布仓库，由profile决定 -->
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Internal Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Internal Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <properties>
+        <project.release.version>0.1-SNAPSHOT</project.release.version>
         <apache.logging>1.2</apache.logging>
         <apache.common.lang>3.7</apache.common.lang>
     </properties>
+
+    <profiles>
+        <profile>
+            <!-- 配置发布版本 -->
+            <id>release</id>
+            <properties>
+                <project.release.version>0.1</project.release.version>
+            </properties>
+        </profile>
+        <profile>
+            <!-- 配置快照版本 -->
+            <id>﻿snapshot</id>
+            <properties>
+                <project.release.version>0.1-SNAPSHOT</project.release.version>
+            </properties>
+            <activation>
+                <!-- 制定默认配置 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
@@ -36,4 +73,26 @@
 
         </plugins>
     </build>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/gaby77/iseekframework-utils</url>
+        <connection>https://github.com/gaby77/iseekframework-utils.git</connection>
+        <developerConnection>https://github.com/gaby77/iseekframework-utils</developerConnection>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>gaby</name>
+            <email>352962709@qq.com</email>
+            <url>https://github.com/gaby77/iseekframework-utils</url>
+        </developer>
+    </developers>
 </project>
