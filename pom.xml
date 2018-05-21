@@ -27,6 +27,9 @@
         <project.release.version>0.1-SNAPSHOT</project.release.version>
         <apache.logging>1.2</apache.logging>
         <apache.common.lang>3.7</apache.common.lang>
+        <jdk.version>1.8</jdk.version>
+        <encoding>UTF-8</encoding>
+        <apache.collections.version>4.1</apache.collections.version>
     </properties>
 
     <profiles>
@@ -34,7 +37,7 @@
             <!-- 配置发布版本 -->
             <id>release</id>
             <properties>
-                <project.release.version>0.1</project.release.version>
+                <project.release.version>0.0.1</project.release.version>
             </properties>
         </profile>
         <profile>
@@ -61,6 +64,12 @@
             <artifactId>commons-lang3</artifactId>
             <version>${apache.common.lang}</version>
         </dependency>
+        <!-- 添加对apache集合类的引用 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${apache.collections.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -69,6 +78,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <encoding>${encoding}</encoding>
+                </configuration>
             </plugin>
 
         </plugins>
