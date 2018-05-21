@@ -13,3 +13,6 @@ bean操作公共类
 
 集合操作公共类
 
+# [iseekframework-utils](https://github.com/gaby77/iseekframework-utils)/[src](https://github.com/gaby77/iseekframework-utils/tree/master/src)/[main](https://github.com/gaby77/iseekframework-utils/tree/master/src/main)/[java](https://github.com/gaby77/iseekframework-utils/tree/master/src/main/java)/[pub](https://github.com/gaby77/iseekframework-utils/tree/master/src/main/java/pub)/[iseekframework](https://github.com/gaby77/iseekframework-utils/tree/master/src/main/java/pub/iseekframework)/[utils](https://github.com/gaby77/iseekframework-utils/tree/master/src/main/java/pub/iseekframework/utils)/[list](https://github.com/gaby77/iseekframework-utils/tree/master/src/main/java/pub/iseekframework/utils/list)
+
+List操作公共类
