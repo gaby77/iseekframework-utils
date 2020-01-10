@@ -15,7 +15,7 @@
         <apache.common.lang>3.9</apache.common.lang>
         <jdk.version>1.8</jdk.version>
         <encoding>UTF-8</encoding>
-        <apache.collections.version>4.1</apache.collections.version>
+        <apache.collections.version>4.4</apache.collections.version>
     </properties>
 
     <dependencies>
