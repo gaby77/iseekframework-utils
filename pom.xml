@@ -12,7 +12,7 @@
     <properties>
         <project.release.version>0.1-SNAPSHOT</project.release.version>
         <apache.logging>1.2</apache.logging>
-        <apache.common.lang>3.7</apache.common.lang>
+        <apache.common.lang>3.9</apache.common.lang>
         <jdk.version>1.8</jdk.version>
         <encoding>UTF-8</encoding>
         <apache.collections.version>4.1</apache.collections.version>
@@ -126,7 +126,7 @@
             <!-- 配置发布版本 -->
             <id>release</id>
             <properties>
-                <project.release.version>0.0.2</project.release.version>
+                <project.release.version>0.0.3</project.release.version>
             </properties>
         </profile>
         <profile>
