@@ -98,14 +98,26 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- about org.sonatype.plugins（实现自动release）-->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>releases</serverId><!--这个是在setting.xml配置的用户名密码-->
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
 
     <!-- about project message -->
     <name>iseekframework-utils</name>
-    <description>This is iseekframework-utils</description>
-    <url>https://github.com/gaby77/iseekframework-utils</url>
+    <description>This is iseekframework-utils.</description>
+    <url>https://github.com/gaby77/iseekframework-utils/blob/master/README.md</url>
 
     <!-- 上传到快照仓库还是发布仓库，由profile决定 -->
     <distributionManagement>
@@ -126,7 +138,7 @@
             <!-- 配置发布版本 -->
             <id>release</id>
             <properties>
-                <project.release.version>0.0.3</project.release.version>
+                <project.release.version>0.0.4</project.release.version>
             </properties>
         </profile>
         <profile>
