@@ -138,7 +138,7 @@
             <!-- 配置发布版本 -->
             <id>release</id>
             <properties>
-                <project.release.version>0.0.4</project.release.version>
+                <project.release.version>0.0.5</project.release.version>
             </properties>
         </profile>
         <profile>
