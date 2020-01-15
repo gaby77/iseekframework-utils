@@ -2,6 +2,8 @@ package pub.iseekframework.utils.date;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -47,6 +49,17 @@ public class DateUtils {
      */
     public static String getDateTime() {
         return formatDate(new Date(), "yyyy-MM-dd HH:mm:ss");
+    }
+
+    /**
+     * 获取LocalDateTime时间
+     * @param time 时间字符串
+     * @return
+     */
+    public static LocalDateTime getLocalDateTime(String time) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(time,df);
+
     }
 
 }
