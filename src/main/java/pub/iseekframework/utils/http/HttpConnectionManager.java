@@ -38,8 +38,6 @@ import java.util.Map;
  */
 public class HttpConnectionManager {
 
-    private static CloseableHttpClient httpClient = HttpConnectionManager.getInstance().getHttpClient();
-
     /**
      * 最大连接数
      */
