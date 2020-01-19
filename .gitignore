@@ -18,4 +18,4 @@ dependency-reduced-pom.xml
 *.ipr
 *.iws
 *.idea
-src/test/
+#src/test/
