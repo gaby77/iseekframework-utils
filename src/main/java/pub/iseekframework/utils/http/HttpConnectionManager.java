@@ -38,51 +38,52 @@ import java.util.Map;
  */
 public class HttpConnectionManager {
 
+    private static PoolingHttpClientConnectionManager cm;
+
+
+    /**
+     * http连接管理器线程
+     */
+    private static HttpClientConnectionMonitorThread thread;
+
+    public static HttpClientConnectionMonitorThread getThread() {
+        return thread;
+    }
+
+    public static void setThread(HttpClientConnectionMonitorThread thread) {
+        HttpConnectionManager.thread = thread;
+    }
+
     /**
      * 最大连接数
      */
-    private static final Integer HTTP_MAXTOTAL = 20;
+    private static final Integer HTTP_MAXTOTAL = 3000;
+
 
     /**
      * 并发数
      */
-    private static final Integer HTTP_DEFAULTMAXPERROUTE = 20;
+    private static final Integer HTTP_DEFAULTMAXPERROUTE = 1500;
 
     /**
      * 创建连接的最长时间
      */
-    private static final Integer HTTP_CONNECTTIMEOUT = 1000 * 60;
+    private static final Integer HTTP_CONNECTTIMEOUT = 1000 * 10;
 
     /**
      * 从连接池中获取到连接的最长时间
      */
-    private static final Integer HTTP_CONNECTIONREQUESTTIMEOUT = 500;
+    private static final Integer HTTP_CONNECTIONREQUESTTIMEOUT = 1000 * 10;
 
     /**
      * 数据传输的最长时间
      */
-    private static final Integer HTTP_SOCKETTIMEOUT = 10000;
+    private static final Integer HTTP_SOCKETTIMEOUT = 20 * 1000;
 
     private static final String CHARSET = "UTF-8";
 
 
-    private PoolingHttpClientConnectionManager cm = null;
-
-    private static HttpConnectionManager connectionManager;
-
-    public static HttpConnectionManager getInstance() {
-        if (connectionManager == null) {
-            synchronized (HttpConnectionManager.class) {
-                if (connectionManager == null) {
-                    connectionManager = new HttpConnectionManager();
-                    connectionManager.init();
-                }
-            }
-        }
-        return connectionManager;
-    }
-
-    private void init() {
+    static {
         // 使用ssl单向认证，由于证书是keytool生成的，需要绕过验证
         LayeredConnectionSocketFactory sslsf = null;
         try {
@@ -109,16 +110,25 @@ public class HttpConnectionManager {
         cm = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
         cm.setMaxTotal(HTTP_MAXTOTAL);
         cm.setDefaultMaxPerRoute(HTTP_DEFAULTMAXPERROUTE);
+
+        //管理http连接
+        HttpConnectionManager.thread = new HttpClientConnectionMonitorThread(cm);
+
     }
 
-    public CloseableHttpClient getHttpClient() {
-        RequestConfig.Builder config = RequestConfig.custom();
-        config.setConnectionRequestTimeout(HTTP_CONNECTIONREQUESTTIMEOUT);
-        config.setSocketTimeout(HTTP_SOCKETTIMEOUT);
-        config.setConnectTimeout(HTTP_CONNECTTIMEOUT);
+
+    public static CloseableHttpClient getHttpClient() {
+        RequestConfig config = RequestConfig.custom()
+                .setConnectionRequestTimeout(HTTP_CONNECTIONREQUESTTIMEOUT)
+                .setSocketTimeout(HTTP_SOCKETTIMEOUT)
+                .setConnectTimeout(HTTP_CONNECTTIMEOUT)
+                .build();
+
         CloseableHttpClient httpClient = HttpClients.custom()
-                .setDefaultRequestConfig(config.build())
-                .setConnectionManager(cm).build();
+                .setDefaultRequestConfig(config)
+                .setConnectionManager(cm)
+                .build();
+
         return httpClient;
     }
 
@@ -132,7 +142,7 @@ public class HttpConnectionManager {
     public static String sendGetICClient(String url) {
         String result = null;
         try{
-            CloseableHttpClient httpClient = HttpConnectionManager.getInstance().getHttpClient();
+            CloseableHttpClient httpClient = HttpConnectionManager.getHttpClient();
             HttpGet httpGet = new HttpGet(url);
             CloseableHttpResponse response = httpClient.execute(httpGet);
 
@@ -167,7 +177,7 @@ public class HttpConnectionManager {
     public static String sendGetICClient(String url, Map<String, String> headMap) {
         String result = null;
         try {
-            CloseableHttpClient httpClient = HttpConnectionManager.getInstance().getHttpClient();
+            CloseableHttpClient httpClient = HttpConnectionManager.getHttpClient();
             HttpGet httpGet = new HttpGet(url);
 
             if (headMap != null && headMap.size() > 0) {
@@ -211,13 +221,6 @@ public class HttpConnectionManager {
 
         try{
             HttpPost httpPost = new HttpPost(url);
-
-            // 设置连接超时,设置读取超时
-            RequestConfig requestConfig = RequestConfig.custom()
-                    .setConnectTimeout(10000)
-                    .setSocketTimeout(10000)
-                    .build();
-            httpPost.setConfig(requestConfig);
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-Type", "application/json;charset=utf-8");
 
@@ -246,13 +249,6 @@ public class HttpConnectionManager {
 
         try{
             HttpPost httpPost = new HttpPost(url);
-
-            // 设置连接超时,设置读取超时
-            RequestConfig requestConfig = RequestConfig.custom()
-                    .setConnectTimeout(10000)
-                    .setSocketTimeout(10000)
-                    .build();
-            httpPost.setConfig(requestConfig);
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-Type", "application/json;charset=utf-8");
 
@@ -288,7 +284,7 @@ public class HttpConnectionManager {
         String result = null;
 
         try{
-            CloseableHttpClient httpClient = HttpConnectionManager.getInstance().getHttpClient();
+            CloseableHttpClient httpClient = HttpConnectionManager.getHttpClient();
 
             StringEntity se = new StringEntity(bodyJsonStr, CHARSET);
             httpPost.setEntity(se);
