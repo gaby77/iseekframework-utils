@@ -10,7 +10,6 @@
     <packaging>jar</packaging>
 
     <properties>
-        <project.release.version>0.1-SNAPSHOT</project.release.version>
         <apache.logging>1.2</apache.logging>
         <apache.common.lang>3.9</apache.common.lang>
         <jdk.version>1.8</jdk.version>
@@ -156,7 +155,7 @@
             <!-- 配置快照版本 -->
             <id>﻿snapshot</id>
             <properties>
-                <project.release.version>0.1-SNAPSHOT</project.release.version>
+                <project.release.version>0.0.1-SNAPSHOT</project.release.version>
             </properties>
             <activation>
                 <!-- 制定默认配置 -->
