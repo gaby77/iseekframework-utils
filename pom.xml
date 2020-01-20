@@ -6,7 +6,7 @@
 
     <groupId>pub.iseekframework</groupId>
     <artifactId>iseekframework-utils</artifactId>
-    <version>${project.release.version}</version>
+    <version>${project.snapshot.version}</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -15,6 +15,7 @@
         <jdk.version>1.8</jdk.version>
         <encoding>UTF-8</encoding>
         <apache.collections.version>4.4</apache.collections.version>
+        <httpclient.version>4.5.10</httpclient.version>
     </properties>
 
     <dependencies>
@@ -43,7 +44,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.10</version>
+            <version>${httpclient.version}</version>
         </dependency>
     </dependencies>
 
@@ -115,7 +116,8 @@
                 <version>1.6.8</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>releases</serverId><!--这个是在setting.xml配置的用户名密码-->
+                    <!-- 这个是在setting.xml配置的用户名密码 -->
+                    <serverId>releases</serverId>
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
@@ -155,7 +157,7 @@
             <!-- 配置快照版本 -->
             <id>﻿snapshot</id>
             <properties>
-                <project.release.version>0.0.1-SNAPSHOT</project.release.version>
+                <project.snapshot.version>0.0.1-SNAPSHOT</project.snapshot.version>
             </properties>
             <activation>
                 <!-- 制定默认配置 -->
