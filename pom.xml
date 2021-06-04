@@ -15,7 +15,7 @@
         <jdk.version>1.8</jdk.version>
         <encoding>UTF-8</encoding>
         <apache.collections.version>4.4</apache.collections.version>
-        <httpclient.version>4.5.10</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
     </properties>
 
     <dependencies>
